@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProductivePlanner - Modern Calendar App</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <h1 class="site-title">ProductivePlanner</h1>
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+      <div class="view-modes">
+        <button id="daily-view">Daily</button>
+        <button id="weekly-view" class="active">Weekly</button>
+        <button id="monthly-view">Monthly</button>
+        <button id="yearly-view">Yearly</button>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="new-event-btn" class="btn btn-primary">+ New Event</button>
+        <button id="filter-btn" class="btn btn-secondary">Filter</button>
+      </div>
+      
+      <div class="filter-section">
+        <span class="filter-label">
+          Filter by: 
+          <select id="filter-select">
+            <option value="all">Show All</option>
+            <option value="schedule">Schedule</option>
+            <option value="calendar">Calendar</option>
+            <option value="work">Work</option>
+            <option value="school">School</option>
+            <option value="personal">Personal</option>
+            <option value="other">Other</option>
+          </select>
+          <span id="event-counter">(0 events)</span>
+        </span>
+      </div>
+      
+      <div class="quick-access">
+        <button id="create-schedule-btn" class="btn-icon" title="Create Schedule">📅</button>
+        <button id="goals-btn" class="btn-icon" title="Goals">🎯</button>
+        <button id="reminders-btn" class="btn-icon" title="Reminders">⏰</button>
+      </div>
+    </header>
+
+    <!-- Calendar Grid -->
+    <main class="calendar-section">
+      <table class="calendar-grid">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>29 JUN<br>SUN</th>
+            <th>30 JUN<br>MON</th>
+            <th>1 JUL<br>TUE</th>
+            <th>2 JUL<br>WED</th>
+            <th>3 JUL<br>THU</th>
+            <th>4 JUL<br>FRI</th>
+            <th>5 JUL<br>SAT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>2 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>3 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>4 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>5 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>6 PM</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </main>
+
+    <!-- Modals -->
+    <div id="new-event-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Create New Event</h3>
+          <span class="close" data-modal="new-event-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="new-event-form">
+            <div class="form-group">
+              <label for="event-title">Event Title</label>
+              <input type="text" id="event-title" name="title" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="event-start-time">Start Time</label>
+              <input type="time" id="event-start-time" name="start-time" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="event-end-time">End Time</label>
+              <input type="time" id="event-end-time" name="end-time" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="event-description">Description</label>
+              <textarea id="event-description" name="description" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="all-day" /> All Day Event
+              </label>
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="recurring" id="recurring-checkbox" /> Recurring Event
+              </label>
+            </div>
+            
+            <div id="recurring-options" style="display:none; margin-bottom:20px;">
+              <div class="form-group">
+                <label for="recurring-type">Repeat</label>
+                <select id="recurring-type" name="recurring-type" class="form-control">
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="event-category">Category</label>
+              <select id="event-category" name="category" class="form-control">
+                <option value="work">Work</option>
+                <option value="school">School</option>
+                <option value="personal">Personal</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="event-color">Color</label>
+              <input type="color" id="event-color" name="color" value="#1a365d" class="form-control" style="width: 60px; height: 40px;" />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Create Event</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="reminders-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Reminders</h3>
+          <span class="close" data-modal="reminders-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="reminders-list">
+            <!-- Reminders will be populated here -->
+          </div>
+          <form id="new-reminder-form">
+            <div class="form-group">
+              <label for="reminder-title">Event Title</label>
+              <input type="text" id="reminder-title" name="event-title" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="reminder-time">Reminder Time</label>
+              <input type="datetime-local" id="reminder-time" name="reminder-time" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="reminder-description">Description</label>
+              <textarea id="reminder-description" name="reminder-description" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Reminder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="goals-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Goals</h3>
+          <span class="close" data-modal="goals-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="goals-list">
+            <!-- Goals will be populated here -->
+          </div>
+          <form id="new-goal-form">
+            <div class="form-group">
+              <label for="goal-title">Goal Title</label>
+              <input type="text" id="goal-title" name="goal-title" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="goal-description">Description</label>
+              <textarea id="goal-description" name="goal-description" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="goal-date">Target Date</label>
+              <input type="date" id="goal-date" name="goal-date" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+              <label for="goal-category">Category</label>
+              <select id="goal-category" name="goal-category" class="form-control">
+                <option value="personal">Personal</option>
+                <option value="work">Work</option>
+                <option value="health">Health</option>
+                <option value="learning">Learning</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Goal</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="create-schedule-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Create Schedule</h3>
+          <span class="close" data-modal="create-schedule-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="create-schedule-form">
+            <div class="form-group">
+              <label>Time Slot</label>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <input type="time" name="start-time" class="form-control" required />
+                <span>to</span>
+                <input type="time" name="end-time" class="form-control" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <h4>Tasks</h4>
+              <div id="tasks-list">
+                <!-- Tasks will be added here dynamically -->
+              </div>
+              <button type="button" id="add-task-btn" class="btn btn-secondary" style="margin-top: 12px;">+ Add Task</button>
+            </div>
+            
+            <div class="form-group">
+              <label for="breaks">Break Duration (minutes)</label>
+              <input type="number" id="breaks" name="breaks" min="0" max="60" class="form-control" style="width: 120px;" />
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="pomodoro" /> Use Pomodoro Technique
+              </label>
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="eat-the-frog" /> Eat the Frog (Hardest tasks first)
+              </label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Create Schedule</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="event-details-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="event-details-title"></h3>
+          <span class="close" data-modal="event-details-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="event-details-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
